@@ -53,6 +53,8 @@ def content_object_init(instance):
                 logger.debug('Better Fig. src: %s', src)
                 if not (path.isfile(src) and access(src, R_OK)):
                     logger.error('Better Fig. Error: image not found: {}'.format(src))
+                    logger.debug('Better Fig. Skip src: %s', img_path + '/' + img_filename)
+                    continue
 
                 # Open the source image and query dimensions; build style string
                 im = Image.open(src)

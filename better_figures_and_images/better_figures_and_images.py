@@ -14,6 +14,7 @@ TODO: Need to add a test.py for this plugin.
 """
 
 from os import path, access, R_OK
+import os
 
 from pelican import signals
 
@@ -46,9 +47,8 @@ def content_object_init(instance):
                     img_path = img_path[7:]
                 else:
                     logger.warning('Better Fig. Error: img_path should start with either {filename}, |filename| or /static')
-
-                # Build the source image filename
-                src = instance.settings['PATH'] + img_path + '/' + img_filename
+                static_path = instance.settings['STATIC_PATHS'][0]
+                src = os.path.join(instance.settings['PATH'], static_path, img_path, img_filename)
 
                 logger.debug('Better Fig. src: %s', src)
                 if not (path.isfile(src) and access(src, R_OK)):

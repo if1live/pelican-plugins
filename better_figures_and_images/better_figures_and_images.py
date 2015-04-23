@@ -13,6 +13,7 @@ TODO: Need to add a test.py for this plugin.
 
 """
 
+from __future__ import unicode_literals
 from os import path, access, R_OK
 
 from pelican import signals
@@ -60,7 +61,7 @@ def content_object_init(instance):
                 im = Image.open(src)
                 extra_style = 'width: {}px; height: auto;'.format(im.size[0])
 
-                if instance.settings['RESPONSIVE_IMAGES']:
+                if 'RESPONSIVE_IMAGES' in instance.settings and instance.settings['RESPONSIVE_IMAGES']:
                     extra_style += ' max-width: 100%;'
 
                 if img.get('style'):

@@ -45,6 +45,8 @@ To insert youtube video into a post, enable the
 The width and height are in pixels, and can be optionally specified.  If they
 are not, then the dimensions will be 640 (wide) by 390 (tall).
 
+If you're experiencing issues with code generating (i.e. missing closing tags), add `SUMMARY_MAX_LENGTH = None` to your config.
+
 ## Vimeo Tag
 To insert a Vimeo video into a post, enable the
 ``liquid_tags.vimeo`` plugin, and add to your document:
@@ -53,6 +55,8 @@ To insert a Vimeo video into a post, enable the
 
 The width and height are in pixels, and can be optionally specified.  If they
 are not, then the dimensions will be 640 (wide) by 390 (tall).
+
+If you're experiencing issues with code generating (i.e. missing closing tags), add `SUMMARY_MAX_LENGTH = None` to your config.
 
 ## Video Tag
 To insert flash/HTML5-friendly video into a post, enable the
@@ -94,7 +98,8 @@ setting, e.g.:
     STATIC_PATHS = ['images', 'code']
 
 ## IPython notebooks
-To insert an ipython notebook into your post, enable the
+
+To insert an [IPython][] notebook into your post, enable the
 ``liquid_tags.notebook`` plugin and add to your document:
 
     {% notebook filename.ipynb %}
@@ -108,7 +113,9 @@ config file:
 Because the conversion and rendering of notebooks is rather involved, there
 are a few extra steps required for this plugin:
 
-- First, you will need to install IPython >= 1.0 [[1](#1)]
+- First, you will need to install IPython:
+
+      pip install ipython==2.4.1
 
 - After typing "make html" when using the notebook tag, a file called
   ``_nb_header.html`` will be produced in the main directory.  The content
@@ -172,4 +179,4 @@ cd path/to/liquid_tags
 nosetests
 ```
 
-[<a name="1">1</a>] http://ipython.org/
+[IPython]: http://ipython.org/

@@ -51,14 +51,22 @@ def content_object_init(instance):
                     continue
                 else:
                     logger.warning('Better Fig. Error: img_path should start with either {filename}, |filename| or /static')
-                static_path = instance.settings['STATIC_PATHS'][0]
-                src = os.path.join(instance.settings['PATH'], static_path, img_path, img_filename)
 
-                logger.debug('Better Fig. src: %s', src)
-                if not (path.isfile(src) and access(src, R_OK)):
-                    logger.error('Better Fig. Error: image not found: {}'.format(src))
+                # search src path list
+                # 1. Build the source image filename from PATH
+                # 2. Build the source image filename from STATIC_PATHS
+                src = os.path.join(instance.settings['PATH'], img_path, img_filename)
+                src_candidates = [src]
+                src_candidates += [os.path.join(instance.settings['PATH'], static_path, img_path, img_filename) for static_path in instance.settings['STATIC_PATHS']]
+                src_candidates = [f for f in src_candidates if path.isfile(f) and access(f, R_OK)]
+
+                if not src_candidates:
+                    logger.error('Better Fig. Error: image not found: %s', src)
                     logger.debug('Better Fig. Skip src: %s', img_path + '/' + img_filename)
                     continue
+
+                src = src_candidates[0]
+                logger.debug('Better Fig. src: %s', src)
 
                 # Open the source image and query dimensions; build style string
                 im = Image.open(src)
